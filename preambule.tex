@@ -1,0 +1,237 @@
+\documentclass[11pt]{beamer}
+
+%% Beamer Options
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+
+\usefonttheme{serif}
+
+%% Packages
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage[T1]{fontenc}
+\usepackage[autolanguage]{numprint}
+\usepackage{hyphenat}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{unicode-math}
+\usepackage[european, american inductors, straightvoltages]{circuitikz}
+\usepackage{lmodern}
+\hyphenation{}
+
+\usepackage{caption}
+\captionsetup[figure]{name=Fig.}
+
+\sisetup{%
+  mode = math,
+  detect-family,
+  detect-weight,  
+  exponent-product = \cdot,
+  number-unit-separator=\text{\,},
+  output-decimal-marker={\text{,}},
+}
+
+
+
+\tikzset{
+  invisible/.style={opacity=0},
+  visible on/.style={alt={#1{}{invisible}}},
+  alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+}
+
+
+\makeatletter
+\def\ifemptyarg#1{%
+  \if\relax\detokenize{#1}\relax % H. Oberdiek
+    \expandafter\@firstoftwo
+  \else
+    \expandafter\@secondoftwo
+  \fi}
+\makeatother
+
+\let\oldcaption\caption
+\AtBeginDocument{%
+  \renewcommand{\caption}[2][]{%
+    \ifemptyarg{#2}{}{\oldcaption[#1]{#2}}%
+  }%
+}
+
+%% Mise en page
+% \newcommand{\border}[1]{\bbox[10px, border: 1px solid]{#1}}
+\newcommand{\figcentered}[2]{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{#1}
+    \caption{#2}
+  \end{figure}
+}
+\newcommand{\figbesides}[4]{
+  \begin{figure}[!tbp]
+    \centering
+    \begin{minipage}[b]{0.49\textwidth}
+      \begin{figure}
+        \includegraphics[width=\textwidth]{#1}
+        \caption{#2}
+      \end{figure}
+    \end{minipage}
+    \hfill
+    \pause
+    \begin{minipage}[b]{0.49\textwidth}
+      \begin{figure}
+        \includegraphics[width=\textwidth]{#3}
+        \caption{#4}
+      \end{figure}
+    \end{minipage}
+  \end{figure}
+}
+\newcommand{\figbesidestextLR}[2]{
+  \begin{tabular}{cl}
+    \begin{tabular}{c}
+      \includegraphics[height=\textheight,width=0.5\linewidth,keepaspectratio]{#1}
+    \end{tabular}
+     & \begin{tabular}{l}
+         \parbox{0.4\linewidth}{#2}
+       \end{tabular}
+  \end{tabular}
+}
+\newcommand{\figbesidestextRL}[2]{
+  \begin{tabular}{lc}
+    \begin{tabular}{l}
+      \parbox{0.4\linewidth}{#1}
+    \end{tabular}
+     & \begin{tabular}{c}
+         \includegraphics[height=\textheight,width=0.5\linewidth,keepaspectratio]{#2}
+       \end{tabular}
+  \end{tabular}
+}
+\newcommand{\figquad}[8]{
+  \begin{figure}[ht]
+    \onslide<1->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#1}
+        \caption{#2}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}%%
+    \onslide<2->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#3}
+        \caption{#4}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}
+    \onslide<3->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#5}
+        \caption{#6}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}%% 
+    \onslide<4->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#7}
+        \caption{#8}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}
+  \end{figure}
+}
+\newcommand{\figdiagTRBL}[6]{
+  \begin{figure}[ht]
+    \onslide<1->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#1}
+        \caption{#2}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}%%
+    \onslide<2->
+    \raisebox{15ex}{
+      \begin{minipage}{0.5\linewidth}
+        \centering
+        {#3}
+        \vspace{1ex}
+      \end{minipage}
+    }
+    \onslide<4->
+    \raisebox{15ex}{
+      \begin{minipage}{0.5\linewidth}
+        \begin{center}
+          {#4}
+        \end{center}
+        \vspace{1ex}
+      \end{minipage}}%% 
+    \onslide<3->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#5}
+        \caption{#6}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}
+  \end{figure}
+}
+\newcommand{\figdiagTLBR}[6]{
+  \begin{figure}[ht]
+    \onslide<2->
+    \raisebox{15ex}{
+      \begin{minipage}{0.5\linewidth}
+        \centering
+        {#1}
+        \vspace{1ex}
+      \end{minipage}
+    }%%
+    \onslide<1->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#2}
+        \caption{#3}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}
+    \onslide<3->
+    \begin{minipage}[b]{0.5\linewidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=.8\linewidth]{#4}
+        \caption{#5}
+      \end{figure}
+      \vspace{1ex}
+    \end{minipage}%%
+    \onslide<4->
+    \raisebox{15ex}{
+      \begin{minipage}{0.5\linewidth}
+        \begin{center}
+          {#6}
+        \end{center}
+        \vspace{1ex}
+      \end{minipage}}
+  \end{figure}
+}
+
+
+
+%% Caractères
+\newcommand{\partialf}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\ceil}[1]{\left\lceil{#1}\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\bracket}[1]{\left[#1\right]}
+\newcommand{\abs}[1]{\left\vert{#1}\right\vert}
